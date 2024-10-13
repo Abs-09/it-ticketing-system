@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
 
         // Creating data for users
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@live.com',
             'email_verified_at' => now(),
@@ -25,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'mazin',
             'email' => 'mazin@live.com',
             'email_verified_at' => now(),
@@ -34,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'izan',
             'email' => 'izan@live.com',
             'email_verified_at' => now(),
@@ -43,6 +46,16 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        \App\Models\User::factory(10)->create();
+        User::factory(10)->create();
+
+        Category::factory()->create([
+            'name' => 'software'
+        ]);
+        Category::factory()->create([
+            'name' => 'hardware'
+        ]);
+        Category::factory()->create([
+            'name' => 'other'
+        ]);
     }
 }

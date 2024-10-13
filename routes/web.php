@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('users', [RegisteredUserController::class, 'index'])->name('users.index');
+    Route::get('users/{user}/edit', [RegisteredUserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [RegisteredUserController::class, 'update'])->name('users.update');
+    Route::delete('users', [RegisteredUserController::class, 'destroy'])->name('users.delete');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

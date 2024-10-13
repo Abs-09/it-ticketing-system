@@ -16,7 +16,7 @@ use Illuminate\View\View;
 class RegisteredUserController extends Controller
 {
 
-    public function index(): View 
+    public function index(): View
     {
         return view('users.index', [
             'users' => User::all()
@@ -49,5 +49,34 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function edit(User $user): View
+    {
+        return view('users.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request, User $user): RedirectResponse
+    {
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect(route('users.index'))->with('success', 'user details updated');
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        User::destroy($request->user_id);
+
+        return redirect()->back()->with('success', "User deleted");
     }
 }
