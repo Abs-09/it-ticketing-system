@@ -24,8 +24,7 @@ class TicketFactory extends Factory
             'description' => fake()->sentence(15),
             'category_id' => Category::inRandomOrder()->first()->id,
             'priority' => fake()->randomElement(['high', 'medium', 'low']),
-            'status' => fake()->randomElement(['open']),
-            'status' => null,
+            'status' => 'open',
         ];
     }
 }

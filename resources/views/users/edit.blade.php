@@ -22,6 +22,12 @@
         </li>
     </ol>
 
+    @if (session('error'))
+        <x-error-message>{{ session('error') }}</x-error-message>
+    @elseif (session('success'))
+        <x-success-message>{{ session('success') }}</x-success-message>
+    @endif
+
     <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         <div class="p-4 sm:p-7">
             <div class="text-center">

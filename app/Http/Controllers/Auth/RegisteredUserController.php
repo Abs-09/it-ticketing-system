@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Error;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -19,36 +21,39 @@ class RegisteredUserController extends Controller
     public function index(): View
     {
         return view('users.index', [
-            'users' => User::all()
+            'users' => User::withTrashed()->paginate(10)
         ]);
     }
 
 
     public function create(): View
     {
-        return view('auth.register');
+        return view('users.create');
     }
 
 
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
 
-        event(new Registered($user));
+        if (!$user) {
+            return redirect()->back()->with('error', 'Error while writing user, please check your form details');
+        }
 
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('users.index')->with('success', 'User added successfully');
     }
 
     public function edit(User $user): View
@@ -78,5 +83,17 @@ class RegisteredUserController extends Controller
         User::destroy($request->user_id);
 
         return redirect()->back()->with('success', "User deleted");
+    }
+
+    public function restore(User $user): RedirectResponse
+    {
+        dd('here');
+        try {
+            $user->restore();
+        } catch (\Exception $e) {
+            return redirect()->with('error', 'Something went wrong');
+        }
+
+        return redirect()->back()->with('success', "User restored");
     }
 }

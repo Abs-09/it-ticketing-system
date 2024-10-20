@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -57,5 +58,7 @@ class DatabaseSeeder extends Seeder
         Category::factory()->create([
             'name' => 'other'
         ]);
+
+        Ticket::factory(10)->create();
     }
 }

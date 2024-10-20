@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->foreignIdFor(Category::class);
-            $table->enum('priority', ['low', 'meduim', 'high']);
+            $table->enum('priority', ['low', 'medium', 'high']);
             $table->enum('status', ['open', 'in_progress', 'resolved', 'closed']);
             $table->foreignId('assigned_to')->nullable();
             $table->timestamps();
