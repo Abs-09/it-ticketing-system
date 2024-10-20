@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('priority', ['low', 'medium', 'high']);
             $table->enum('status', ['open', 'in_progress', 'resolved', 'closed']);
             $table->foreignId('assigned_to')->nullable();
+            $table->dateTime('assigned_at')->nullable();
             $table->timestamps();
             $table->dateTime('resolved_at')->nullable();
             $table->softDeletes();

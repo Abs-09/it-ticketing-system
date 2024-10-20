@@ -10,28 +10,28 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function index() : View 
+    public function index(): View
     {
         return view('tickets.index', [
-            'tickets' => Ticket::all()
+            'tickets' => Ticket::latest()->paginate(10)
         ]);
     }
 
 
-    public function show(Ticket $ticket) : View 
+    public function show(Ticket $ticket): View
     {
         return view('tickets.show', ['ticket' => $ticket]);
     }
 
 
-    public function create() : View 
+    public function create(): View
     {
         return view('tickets.create', [
             'categories' => Category::all()
         ]);
     }
 
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'title' => "required|max:50",
