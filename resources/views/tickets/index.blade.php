@@ -180,7 +180,7 @@
                                                 data-hs-overlay="#hs-ai-invoice-modal">
                                                 <span class="block px-6 py-2">
                                                     <span
-                                                        class="text-sm text-gray-600 dark:text-neutral-400">{{ $ticket->priority }}</span>
+                                                        class="text-sm @if ($ticket->priority == 'high') border-red-500 text-red-500 @elseif($ticket->priority == 'medium')  border-gray-500 text-gray-500 dark:text-neutral-400 @else border-teal-500 text-teal-500 @endif">{{ $ticket->priority }}</span>
                                                 </span>
                                             </button>
                                         </td>
@@ -191,7 +191,7 @@
                                                 data-hs-overlay="#hs-ai-invoice-modal">
                                                 <span class="block px-6 py-2">
                                                     <span
-                                                        class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                        class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium  rounded-full dark:bg-teal-500/10 @if ($ticket->status == 'open') bg-blue-600 text-white dark:bg-blue-500 @elseif($ticket->status == 'in_progress') bg-yellow-500 text-white @elseif($ticket->status == 'resolved') bg-teal-500 text-white @else bg-red-500 text-white @endif">
                                                         <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg"
                                                             width="16" height="16" fill="currentColor"
                                                             viewBox="0 0 16 16">
@@ -255,7 +255,7 @@
                             class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
                             <div>
                                 <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                    <span class="font-semibold text-gray-800 dark:text-neutral-200"></span> 
+                                    <span class="font-semibold text-gray-800 dark:text-neutral-200"></span>
                                 </p>
                             </div>
 

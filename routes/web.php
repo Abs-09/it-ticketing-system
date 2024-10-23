@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
@@ -46,7 +47,11 @@ Route::middleware('auth')->group(function () {
     Route::put('tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('tickets', [TicketController::class, 'destroy'])->name('tickets.delete');
     Route::get('tickets/{ticket}/{user_id}/assign', [TicketController::class, 'assign'])->name('tickets.assign');
-    
+    Route::get('tickets/{ticket}/{user_id}/resolve', [TicketController::class, 'resolve'])->name('tickets.resolve');
+    Route::get('tickets/{ticket}/{user_id}/close', [TicketController::class, 'close'])->name('tickets.close');
+
+    Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('comments', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
 require __DIR__ . '/auth.php';

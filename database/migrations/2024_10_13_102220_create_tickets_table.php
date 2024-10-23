@@ -25,6 +25,7 @@ return new class extends Migration
             $table->dateTime('assigned_at')->nullable();
             $table->timestamps();
             $table->dateTime('resolved_at')->nullable();
+            $table->dateTime('closed_at')->nullable();
             $table->softDeletes();
         });
     }

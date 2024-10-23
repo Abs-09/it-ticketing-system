@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Ticket;
+use App\Models\TicketHistory;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,9 +56,94 @@ class TicketController extends Controller
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
     }
 
-    public function assign(Ticket $ticket, $user_id) : RedirectResponse
+    public function resolve(Ticket $ticket, $user_id): RedirectResponse
     {
-        dd($ticket, $user_id);
+        // dd($ticket, $user_id);
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'user not found');
+        }
+        $oldstatus = $ticket->status;
+        $ticket->status = 'resolved';
+        $newstatus = $ticket->status;
+        $ticket->resolved_at = now();
+        if (!$ticket->save()) {
+            return redirect()->back()->with('error', 'Error while changing ticket status');
+        }
+
+        $history = new TicketHistory();
+        $history->ticket_id = $ticket->id;
+        $history->changed_by = $user->id;
+        $history->change_type = 'status';
+        $history->old_value = $oldstatus;
+        $history->new_value = $newstatus;
+        $history->changed_date = now();
+        if (!$history->save()) {
+            return redirect()->back()->with('error', 'Error while saving ticket history');
+        }
+
+        return redirect()->back()->with('success', 'Ticket Assigned');
+    }
+
+    public function close(Ticket $ticket, $user_id): RedirectResponse
+    {
+        // dd($ticket, $user_id);
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'user not found');
+        }
+        $oldstatus = $ticket->status;
+        $ticket->status = 'closed';
+        $newstatus = $ticket->status;
+        $ticket->assigned_to = $user->id;
+        $ticket->closed_at = now();
+        if (!$ticket->save()) {
+            return redirect()->back()->with('error', 'Error while changing ticket status');
+        }
+
+        $history = new TicketHistory();
+        $history->ticket_id = $ticket->id;
+        $history->changed_by = $user->id;
+        $history->change_type = 'status';
+        $history->old_value = $oldstatus;
+        $history->new_value = $newstatus;
+        $history->changed_date = now();
+        if (!$history->save()) {
+            return redirect()->back()->with('error', 'Error while saving ticket history');
+        }
+
+        return redirect()->back()->with('success', 'Ticket Assigned');
+    }
+    public function assign(Ticket $ticket, $user_id): RedirectResponse
+    {
+        // dd($ticket, $user_id);
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'user not found');
+        }
+        $oldstatus = $ticket->status;
+        $ticket->status = 'in_progress';
+        $newstatus = $ticket->status;
+        $ticket->assigned_to = $user->id;
+        $ticket->assigned_at = now();
+        if (!$ticket->save()) {
+            return redirect()->back()->with('error', 'Error while changing ticket status');
+        }
+
+        $history = new TicketHistory();
+        $history->ticket_id = $ticket->id;
+        $history->changed_by = $user->id;
+        $history->change_type = 'status';
+        $history->old_value = $oldstatus;
+        $history->new_value = $newstatus;
+        $history->changed_date = now();
+        if (!$history->save()) {
+            return redirect()->back()->with('error', 'Error while saving ticket history');
+        }
+
         return redirect()->back()->with('success', 'Ticket Assigned');
     }
 }
