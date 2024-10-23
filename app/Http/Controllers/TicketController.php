@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Ticket;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +21,10 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket): View
     {
-        return view('tickets.show', ['ticket' => $ticket]);
+        return view('tickets.show', [
+            'ticket' => $ticket,
+            'comments' => Comment::where('ticket_id', $ticket->id)->get()
+        ]);
     }
 
 
@@ -48,5 +52,11 @@ class TicketController extends Controller
         ]);
 
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
+    }
+
+    public function assign(Ticket $ticket, $user_id) : RedirectResponse
+    {
+        dd($ticket, $user_id);
+        return redirect()->back()->with('success', 'Ticket Assigned');
     }
 }

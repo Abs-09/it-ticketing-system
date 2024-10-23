@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'ticket_id' => Ticket::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
+            'comment' => fake()->sentence(15),
         ];
     }
 }
