@@ -184,8 +184,11 @@
         @if ($ticket->status == 'in_progress' || $ticket->status == 'open')
             @if (auth()->user()->role == 'tech_staff' || auth()->user()->role == 'admin' || auth()->user()->id == $ticket->user_id)
                 <!-- Input -->
-                <form class="relative mt-14">
-                    <textarea
+                <form action="{{ route('comments.store') }}" method="POST" class="relative mt-14">
+                    @csrf
+                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <textarea name="comment" required
                         class="p-4 pb-12 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                         placeholder="Write a comment for this ticket ..."></textarea>
 
@@ -202,7 +205,7 @@
                             <div class="flex items-center gap-x-1">
 
                                 <!-- Send Button -->
-                                <button type="button"
+                                <button type="submit"
                                     class="inline-flex shrink-0 justify-center items-center size-8 rounded-lg text-white bg-blue-600 hover:bg-blue-500 focus:z-10 focus:outline-none focus:bg-blue-500">
                                     <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="16"
                                         height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -224,20 +227,23 @@
         <!-- Table -->
         <div class="mt-6 border border-gray-200 p-4 rounded-lg space-y-4 dark:border-neutral-700">
             <h3 class="text-xl font-semibold text-gray-060 dark:text-neutral-300">Comments</h3>
-            <div class="hidden sm:grid sm:grid-cols-4">
-                <div class="sm:col-span-2 text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+            <div class="hidden sm:grid sm:grid-cols-5">
+                <div
+                    class="col-span-full sm:col-span-2 text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
                     Comment
                 </div>
                 <div class="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">User
                 </div>
-                <div class="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Time
+                <div class="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Date Time
+                </div>
+                <div class="col-end text-center text-xs font-medium text-gray-500 uppercase dark:text-neutral-500 ">
                 </div>
             </div>
 
             <div class="hidden sm:block border-b border-gray-200 dark:border-neutral-700"></div>
 
             @foreach ($comments as $comment)
-                <div class="grid grid-cols-4 gap-2">
+                <div class="grid grid-cols-5 gap-4">
                     <div class="col-span-full sm:col-span-2">
                         <p class="font-medium text-gray-800 dark:text-neutral-200">{{ $comment->comment }}</p>
                     </div>
@@ -247,6 +253,19 @@
                     <div>
                         <p class="text-gray-800 dark:text-neutral-200">
                             {{ Carbon\Carbon::parse($comment->updated_at)->format('d M Y - H:i:s') }}</p>
+                    </div>
+                    <div class="col-span-1 text-center mx-auto">
+                        <form action="{{ route('comments.destroy', $comment) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="dark:bg-white hover:text-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 </div>
 

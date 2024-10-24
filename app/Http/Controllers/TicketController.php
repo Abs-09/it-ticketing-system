@@ -25,7 +25,7 @@ class TicketController extends Controller
     {
         return view('tickets.show', [
             'ticket' => $ticket,
-            'comments' => Comment::where('ticket_id', $ticket->id)->get()
+            'comments' => Comment::where('ticket_id', $ticket->id)->latest()->get()
         ]);
     }
 

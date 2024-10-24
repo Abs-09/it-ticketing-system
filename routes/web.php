@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('tickets/{ticket}/{user_id}/close', [TicketController::class, 'close'])->name('tickets.close');
 
     Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
-    Route::delete('comments', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
 require __DIR__ . '/auth.php';
