@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Ticket;
@@ -25,7 +26,8 @@ class TicketController extends Controller
     {
         return view('tickets.show', [
             'ticket' => $ticket,
-            'comments' => Comment::where('ticket_id', $ticket->id)->latest()->get()
+            'comments' => Comment::where('ticket_id', $ticket->id)->latest()->get(),
+            'attachments' => Attachment::where('ticket_id', $ticket->id)->latest()->get()
         ]);
     }
 

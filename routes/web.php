@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
@@ -52,6 +53,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::post('attachments/{ticket}/store', [AttachmentController::class, 'store'])->name('attachments.store');
+    Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('attachments.download');
 });
 
 require __DIR__ . '/auth.php';
