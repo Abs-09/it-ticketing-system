@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TicketHistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::get('tickets/{ticket}/{user_id}/assign', [TicketController::class, 'assign'])->name('tickets.assign');
     Route::get('tickets/{ticket}/{user_id}/resolve', [TicketController::class, 'resolve'])->name('tickets.resolve');
     Route::get('tickets/{ticket}/{user_id}/close', [TicketController::class, 'close'])->name('tickets.close');
+
+    Route::get('histories', [TicketHistoryController::class, 'index'])->name('tickets.histories.index');
 
     Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');

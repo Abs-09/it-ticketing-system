@@ -46,7 +46,7 @@ class TicketController extends Controller
             'description' => "required|max:100"
         ]);
 
-        Ticket::create([
+        $ticket = Ticket::create([
             'user_id' => auth()->user()->id,
             'title' => $request->title,
             'description' => $request->description,
@@ -54,6 +54,19 @@ class TicketController extends Controller
             'priority' => $request->priority,
             'status' => 'open'
         ]);
+
+        if (!$ticket) {
+            return redirect()->back()->with('error', ' Something went wrong');
+        }
+
+        $history = new TicketHistory();
+        $history->ticket_id = $ticket->id;
+        $history->changed_by = auth()->user()->id;
+        $history->change_type = 'status';
+        $history->old_value = 'null';
+        $history->new_value = 'open';
+        $history->changed_date = now();
+        $history->save();
 
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
     }
