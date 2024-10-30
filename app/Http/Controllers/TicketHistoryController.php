@@ -11,7 +11,7 @@ class TicketHistoryController extends Controller
     public function index(): View
     {
         return view('tickets.histories.index', [
-            'histories' => TicketHistory::where('change_type', 'status')->orderBy('changed_date', 'desc')->paginate(10)
+            'histories' => TicketHistory::where('change_type', 'status')->filter(request(['ticket_id', 'date', 'changed_by']))->orderBy('changed_date', 'desc')->paginate(10)->appends(request()->query())
         ]);
     }
 }

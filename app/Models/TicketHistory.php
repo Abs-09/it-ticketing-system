@@ -15,4 +15,11 @@ class TicketHistory extends Model
     {
         return $this->belongsTo(User::class, 'changed_by', 'id');
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['ticket_id'] ?? false) {
+            $query->where('ticket_id', request('ticket_id'));
+        }
+    }
 }
