@@ -19,12 +19,66 @@
                         <div
                             class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
                             <div>
-                                <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                    Tickets
-                                </h2>
-                                <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                    Create Tickets, edit, download and more.
-                                </p>
+                                <form action="" class="flex gap-x-3">
+                                    <div class="sm:col-span-1">
+                                        <label for="hs-as-table-product-review-search" class="sr-only">Search</label>
+                                        <div class="relative">
+                                            <select type="search" name="priority"
+                                                class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                                <option value="" {{ request('priority') === null ? 'selected' : '' }}>Select Priority</option>
+                                                <option value="low" {{ request('priority') == 'low' ? 'selected' : '' }}>Low</option>
+                                                <option value="medium" {{ request('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
+                                                <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>High</option>>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="sm:col-span-1">
+                                        <label for="hs-as-table-product-review-search" class="sr-only">Search</label>
+                                        <div class="relative">
+                                            <select type="search" name="status"
+                                                class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                                <option value="" {{ request('status') === null ? 'selected' : '' }}>Select Status</option>
+                                                <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Open</option>
+                                                <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                                                <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Resolved</option>
+                                                <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Closed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="sm:col-span-1">
+                                        <label for="hs-as-table-product-review-search" class="sr-only">Search</label>
+                                        <div class="relative">
+                                            <div class="max-w-sm space-y-3">
+                                                <input type="search" name="created_by" value="{{request('created_by')}}"
+                                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                    placeholder="Created by">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sm:col-span-1">
+                                        <label for="hs-as-table-product-review-search" class="sr-only">Search</label>
+                                        <div class="relative">
+                                            <div class="max-w-sm space-y-3">
+                                                <input type="search" name="assigned_to" value="{{request('assigned_to')}}"
+                                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                    placeholder="Assigned to">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button
+                                            class="flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:bg-blue-800 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                                            type="submit" id="button-addon1" data-te-ripple-init
+                                            data-te-ripple-color="light">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="blue"
+                                                class="h-5 w-5">
+                                                <path fill-rule="evenodd"
+                                                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
 
                             <div>
@@ -83,9 +137,10 @@
                                             <div class="hs-tooltip">
                                                 <div class="hs-tooltip-toggle">
                                                     <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500"
-                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round">
                                                         <circle cx="12" cy="12" r="10" />
                                                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
                                                         <path d="M12 17h.01" />
@@ -151,7 +206,8 @@
 
                             <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
                                 @foreach ($tickets as $ticket)
-                                    <tr class="bg-white hover:bg-gray-50 dark:bg-neutral-900 dark:hover:bg-neutral-800">
+                                    <tr
+                                        class="bg-white hover:bg-gray-50 dark:bg-neutral-900 dark:hover:bg-neutral-800">
                                         <td class="size-px whitespace-nowrap">
                                             <button type="button" class="block" aria-haspopup="dialog"
                                                 aria-expanded="false" aria-controls="hs-ai-invoice-modal"

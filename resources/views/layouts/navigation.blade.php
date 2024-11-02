@@ -46,7 +46,7 @@
     <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
         <ul class="space-y-1.5">
             <li>
-                <x-nav-link href="#" :activeRoutes="[]">
+                <x-nav-link href="{{route('dashboard')}}" :activeRoutes="['dashboard']">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round"

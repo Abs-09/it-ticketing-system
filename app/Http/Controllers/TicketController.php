@@ -17,7 +17,7 @@ class TicketController extends Controller
     public function index(): View
     {
         return view('tickets.index', [
-            'tickets' => Ticket::latest()->paginate(10)
+            'tickets' => Ticket::latest()->filter(request(['priority', 'status', 'created_by', 'assigned_to']))->paginate(10)->appends(request()->query())
         ]);
     }
 
@@ -131,6 +131,7 @@ class TicketController extends Controller
 
         return redirect()->back()->with('success', 'Ticket Assigned');
     }
+    
     public function assign(Ticket $ticket, $user_id): RedirectResponse
     {
         // dd($ticket, $user_id);

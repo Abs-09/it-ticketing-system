@@ -18,8 +18,19 @@ class TicketHistory extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        // dd($filters);
         if ($filters['ticket_id'] ?? false) {
             $query->where('ticket_id', request('ticket_id'));
+        }
+
+        if ($filters['date'] ?? false) {
+            $query->where('changed_date',  'like', '%' . request('date') . '%');
+        }
+
+        if ($filters['changed_by'] ?? false) {
+            $query->whereHas('changedby', function($qry) use($filters) {
+                $qry->where('name', 'like', '%' . $filters['changed_by'] . '%');
+            });
         }
     }
 }

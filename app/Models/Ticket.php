@@ -26,4 +26,30 @@ class Ticket extends Model
     {
         return $this->hasOne(User::class, 'id', 'assigned_to');
     }
+
+    // 'priority', 'status', 'created_by', 'assigned_to'
+    public function scopeFilter($query, array $filters)
+    {
+        if($filters['priority'] ?? false){
+            $query->where('priority', $filters['priority']);
+        }
+
+        if($filters['status'] ?? false) {
+            $query->where('status', $filters['status']);
+        }
+
+        if ($filters['created_by'] ?? false) {
+            $query->whereHas('createdby', function($qry) use($filters) {
+                $qry->where('name', 'like', '%' . $filters['created_by'] . '%');
+            });
+        }
+        
+        if ($filters['assigned_to'] ?? false) {
+            $query->whereHas('assignedto', function($qry) use($filters) {
+                $qry->where('name', 'like', '%' . $filters['assigned_to'] . '%');
+            });
+        }
+
+   
+    }
 }
