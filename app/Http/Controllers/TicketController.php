@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use PDF;
 
 class TicketController extends Controller
 {
@@ -131,7 +132,7 @@ class TicketController extends Controller
 
         return redirect()->back()->with('success', 'Ticket Assigned');
     }
-    
+
     public function assign(Ticket $ticket, $user_id): RedirectResponse
     {
         // dd($ticket, $user_id);
