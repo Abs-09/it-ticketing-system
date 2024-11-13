@@ -7,7 +7,7 @@
 
     <div class="">
         {{-- Heading --}}
-        <h1 class="text-4xl dark:text-white"><span class="text-gray-500"> Welcome </span> {{auth()->user()?->name}}</h1>
+        <h1 class="text-4xl dark:text-white"><span class="text-gray-500"> Welcome </span> {{ auth()->user()?->name }}</h1>
         <!-- Stat Card Section -->
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
             <!-- Grid -->
@@ -41,7 +41,7 @@
 
                         <div class="mt-1 flex items-center gap-x-2">
                             <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                                {{$total_users}}
+                                {{ $total_users }}
                             </h3>
                             <span class="flex items-center gap-x-1 text-green-600">
                                 <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@
 
                         <div class="mt-1 flex items-center gap-x-2">
                             <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                                {{$total_tickets}}
+                                {{ $total_tickets }}
                             </h3>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
 
                         <div class="mt-1 flex items-center gap-x-2">
                             <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                                {{$total_tickets_pending}}
+                                {{ $total_tickets_pending }}
                             </h3>
                             <span class="flex items-center gap-x-1 text-red-600">
                                 <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@
 
                         <div class="mt-1 flex items-center gap-x-2">
                             <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                                {{$total_tickets_closed}}
+                                {{ $total_tickets_closed }}
                             </h3>
                         </div>
                     </div>

@@ -10,7 +10,6 @@
     <link rel="icon" type="image/x-icon" href="/logo.svg">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v1.9.8/dist/alpine.js" defer></script>
-    <script src="./node_modules/preline/dist/preline.js"></script>
 </head>
 
 
@@ -21,7 +20,8 @@
     <div class="py-0 lg:pl-64">
         @auth
             <div class="flex justify-end px-14 gap-x-5 items-center">
-                <a href="{{route('profile.edit')}}" class="dark:text-white hover:text-blue-600">{{ auth()->user()?->name }}</strong></a>
+                <a href="{{ route('profile.edit') }}"
+                    class="dark:text-white hover:text-blue-600">{{ auth()->user()?->name }}</strong></a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit"
