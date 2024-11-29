@@ -11,7 +11,8 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use PDF;
+use Illuminate\Http\Response;
+use Mpdf\Mpdf as PDF;
 
 class TicketController extends Controller
 {
@@ -162,5 +163,20 @@ class TicketController extends Controller
         }
 
         return redirect()->back()->with('success', 'Ticket Assigned');
+    }
+
+    public function download(Ticket $ticket)
+    {
+        $mpdf = new PDF;
+
+        $view = view('tickets.pdf.show', [
+            'ticket' => $ticket,
+            'comments' => Comment::where('ticket_id', $ticket->id)->latest()->get(),
+            'attachments' => Attachment::where('ticket_id', $ticket->id)->latest()->get()
+        ]);
+
+        $html = $view->render();
+        $mpdf->WriteHTML($html);
+        return Response::make($mpdf->Output("Ticket {$ticket->id} - report.pdf", 'D'));
     }
 }

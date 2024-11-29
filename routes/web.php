@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
     Route::put('tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('tickets', [TicketController::class, 'destroy'])->name('tickets.delete');
+    Route::get('tickets/{ticket}/download', [TicketController::class, 'download'])->name('tickets.download');
     Route::get('tickets/{ticket}/{user_id}/assign', [TicketController::class, 'assign'])->name('tickets.assign');
     Route::get('tickets/{ticket}/{user_id}/resolve', [TicketController::class, 'resolve'])->name('tickets.resolve');
     Route::get('tickets/{ticket}/{user_id}/close', [TicketController::class, 'close'])->name('tickets.close');

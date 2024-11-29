@@ -123,7 +123,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-email"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Email
+                            Role
                         </label>
                     </div>
                     <!-- End Col -->
